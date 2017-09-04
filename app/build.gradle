@@ -1,0 +1,44 @@
+apply plugin: 'com.android.application'
+
+
+android {
+    compileSdkVersion 25
+    buildToolsVersion "25.0.2"
+
+    defaultConfig {
+        applicationId "com.vapk.plugin.testvirtualapkplugin"
+        minSdkVersion 15
+        targetSdkVersion 25
+        versionCode 1
+        versionName "1.0"
+    }
+//    buildTypes {
+//        release {
+//            minifyEnabled false
+//            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+//        }
+//    }
+
+    signingConfigs {
+        release {
+            storeFile file("../keystore/test_plugin_key.jks")
+            storePassword "111111"
+            keyAlias "test_plugin_key"
+            keyPassword "111111"
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    testCompile 'junit:junit:4.12'
+    compile 'com.android.support:appcompat-v7:25.3.1'
+}
+
+apply plugin: 'com.didi.virtualapk.plugin'
+
+virtualApk {
+    packageId = 0x6f // the package id of Resources.
+    targetHost = '../TestVirtualApkHost/app' // the path of application module in host project.
+    applyHostMapping = true //optional, default value: true.
+}
